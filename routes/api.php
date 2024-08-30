@@ -39,7 +39,7 @@ Route::post('/', function (Request $request) {
     /** @var UploadedFile $file */
     foreach ($files as $file) {
 
-        $path = Storage::disk('public')->putFile('images', $file);
+        $path = Storage::disk('public')->putFile('storage/images', $file);
 
         $save = new Image();
         $save->path = $path;
