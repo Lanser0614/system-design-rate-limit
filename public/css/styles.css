@@ -1,0 +1,194 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.parent {
+    display: flex;
+    gap: 16px;
+}
+
+.canvas {
+    width: 50%;
+    padding: 10px;
+    height: 90vh;
+    margin: 10px;
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(7, 105, 180, 0.44);
+    -moz-box-shadow: 0px 5px 10px 2px rgba(7, 105, 180, 0.44);
+    box-shadow: 0px 5px 10px 2px rgba(7, 105, 180, 0.44);
+    border-radius: 10px;
+}
+
+.canvas-container {
+    width: 50%;
+}
+
+.editor {
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    border-radius: 5px;
+    padding: 10px;
+    -webkit-box-shadow: -8px 5px 10px 2px rgba(16, 128, 234, 0.2);
+    -moz-box-shadow: -8px 5px 10px 2px rgba(16, 128, 234, 0.2);
+    box-shadow: -8px 5px 10px 2px rgba(16, 128, 234, 0.2);
+}
+
+.editor div {
+    width: 40%;
+}
+.editor div:nth-child(1) {
+    width: 100%;
+}
+
+.editor div label {
+    margin-bottom: 20px;
+}
+.button-group {
+    padding: 5px;
+    margin: 10px;
+    width: 45%;
+}
+
+#controls input[type="file"] {
+    margin-bottom: 10px;
+}
+
+#controls input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#controls button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.editor select,input[type="number"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.editor input[type="color"] {
+    padding: 0 2px 0 2px;
+    border-radius: 10%;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    background: #ffffff;
+    align-self: center;
+    text-align: center;
+}
+
+#controls button:hover {
+    background-color: #0056b3;
+}
+
+#controls button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Drag n drop */
+
+.dropzone {
+    width: 45%;
+    border: 2px dashed #007BFF;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #f9f9f9;
+    position: relative;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.dropzone.dragover {
+    background-color: #e0f7fa;
+}
+
+.dropzone img {
+    max-width: 50px;
+    margin-bottom: 10px;
+}
+
+.dropzone p {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+}
+
+.dropzone input[type="file"] {
+    display: none;
+}
+
+.tshirt-image {
+    display: block;
+    width: 50%;
+    background: #ffffff;
+    margin: 0 5px 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    -webkit-box-shadow: -1px 8px 25px 2px rgba(0, 144, 255, 0.2);
+    -moz-box-shadow: -1px 8px 25px 2px rgba(0, 144, 255, 0.2);
+    box-shadow: -1px 8px 25px 2px rgba(0, 144, 255, 0.2);
+}
+
+.active {
+    -webkit-box-shadow: -2px 1px 32px -6px rgba(255, 108, 11, 0.82);
+    -moz-box-shadow: -2px 1px 32px -6px rgba(255, 108, 11, 0.82);
+    box-shadow: -2px 1px 32px -6px rgba(255, 108, 11, 0.82);
+}
+
+.tshirt-image-container {
+    display: flex;
+    height: 200px;
+}
+
+.upper-container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: -8px 5px 10px 2px rgba(16, 128, 234, 0.2);
+    -moz-box-shadow: -8px 5px 10px 2px rgba(16, 128, 234, 0.2);
+    box-shadow: -8px 5px 10px 2px rgba(16, 128, 234, 0.2);
+}
+
+.box-shadow-main {
+    -webkit-box-shadow: -8px 5px 10px 2px rgba(16, 128, 234, 0.2);
+    -moz-box-shadow: -8px 5px 10px 2px rgba(16, 128, 234, 0.2);
+    box-shadow: -8px 5px 10px 2px rgba(16, 128, 234, 0.2);
+}
+
+.cursor-point {
+    cursor: pointer;
+}

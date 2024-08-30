@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/token-bucket', function () {
     return view('welcome');
 })->middleware([TokenBucket::class]);
