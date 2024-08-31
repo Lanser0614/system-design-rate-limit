@@ -33,7 +33,7 @@
             <div>
                 <label for="textInput" style="width: 100%; text-align: left">
                     <span>Добавить текст</span>
-                    <input type="text" id="textInput" placeholder="Enter text" oninput="editText(this.value)"/>
+                    <input type="text" id="textInput" placeholder="Добавьте текст" oninput="editText(this.value)"/>
                     <button onclick="addText()">Добавить текст</button>
                 </label>
             </div>
