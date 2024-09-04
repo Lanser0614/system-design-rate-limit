@@ -95,26 +95,44 @@ fileInput.addEventListener('change', (e) => {
     uploadImage(e);
 });
 
-function addText() {
+function addText(options) {
     const text = document.getElementById('textInput').value;
     if (!text.trim()) return;
 
-    const textObj = new fabric.Text(text, {
+    getOptions()
+    options = { ...options,
         left: 100,
         top: 100,
         fontSize: 30,
-        fill: 'black',
+        fill: '#c91818',
         editable: true,
         cornerStyle: 'circle',
         cornerSize: 10,
         padding: 10,
         hasBorders: true,
         hasControls: true
-    });
+    }
+
+    console.log(options)
+
+    const textObj = new fabric.Text(text, options);
 
     canvas.add(textObj);
     canvas.setActiveObject(textObj);
     canvas.renderAll();
+}
+
+function getOptions() {
+    let options = {}
+    let inputs = $('.editor input').filter(function (index, el ) {
+        console.log($(el).attr('id') != 'textInput', $(el).attr('id'));
+       return $(el).attr('id') != 'textInput';
+    })
+    inputs.each(function (index, el) {
+        options = {...options, {
+
+        }};
+    })
 }
 
 function editText(newText) {
@@ -180,6 +198,8 @@ function changeTextColor(color) {
     if (activeObject && activeObject.type === 'text') {
         activeObject.set({ fill: color });
         canvas.renderAll();
+    } else {
+        $('#textInput').value = color;
     }
 }
 
