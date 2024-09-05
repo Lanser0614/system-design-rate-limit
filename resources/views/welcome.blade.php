@@ -14,7 +14,7 @@
     <div class="canvas" id="canvas">
         <canvas id="printCanvas"></canvas>
     </div>
-    <div id="controls" class="button-group">
+    <form id="controls" class="button-group">
         <div class="upper-container">
             <div class="tshirt-image-container">
                 <img class="tshirt-image" src={{ asset("image/white-tshirt.png") }} alt="tshirt-white">
@@ -33,13 +33,13 @@
             <div>
                 <label for="textInput" style="width: 100%; text-align: left">
                     <span>Добавить текст</span>
-                    <input type="text" id="textInput" placeholder="Добавьте текст" oninput="editText(this.value)"/>
-                    <button onclick="addText()">Добавить текст</button>
+                    <input type="text" id="textInput" name="text" placeholder="Добавьте текст" oninput="editText(this.value)"/>
+                    <button id="addText">Добавить текст</button>
                 </label>
             </div>
             <div>
                 <label for="font-family">Стиль шрифта:
-                    <select id="font-family" onchange="changeFontFamily(this.value)">
+                    <select id="font-family" name="fontFamily" onchange="changeFontFamily(this.value)">
                         <option value="Arial">Arial</option>
                         <option value="Courier New">Courier New</option>
                         <option value="Times New Roman">Times New Roman</option>
@@ -49,27 +49,27 @@
             </div>
             <div>
                 <label for="font-size">Размер шрифта:
-                    <input type="number" id="font-size" value="30" onchange="changeFontSize(this.value)" min="10"
+                    <input type="number" name="fontSize" id="font-size" value="30" onchange="changeFontSize(this.value)" min="10"
                            max="100">
                 </label>
             </div>
             <div>
                 <label for="text-color">Цвет текста:
-                    <input type="color" id="text-color" value="#000000" onchange="changeTextColor(this.value)">
+                    <input type="color" name="fill" id="text-color" value="#000000" onchange="changeTextColor(this.value)">
                 </label>
             </div>
             <div style="display: flex; justify-content: space-between">
                 <label for="text-bold">Жирный:
-                    <input type="checkbox" id="text-bold" onchange="toggleBold(this.checked)">
+                    <input type="checkbox" name="fontWeight" id="text-bold" onchange="toggleBold(this.checked)">
                 </label>
                 <label for="text-italic">Курсив:
-                    <input type="checkbox" id="text-italic" onchange="toggleItalic(this.checked)">
+                    <input type="checkbox" name="fontStyle" id="text-italic" onchange="toggleItalic(this.checked)">
                 </label>
             </div>
         </div>
         <button id="deleteButton" class="box-shadow-main">Удалить выбранный элемент</button>
         <button id="downloadButton" class="box-shadow-main"><i class="fas fa-upload"></i> Скачать</button>
-    </div>
+    </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

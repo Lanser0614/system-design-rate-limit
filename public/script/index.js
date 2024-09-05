@@ -99,12 +99,11 @@ function addText(options) {
     const text = document.getElementById('textInput').value;
     if (!text.trim()) return;
 
-    getOptions()
-    options = { ...options,
+    const defaultOptions = {
         left: 100,
         top: 100,
         fontSize: 30,
-        fill: '#c91818',
+        fill: 'black',
         editable: true,
         cornerStyle: 'circle',
         cornerSize: 10,
@@ -112,27 +111,35 @@ function addText(options) {
         hasBorders: true,
         hasControls: true
     }
+    let opt = {...defaultOptions, ...options}
 
-    console.log(options)
-
-    const textObj = new fabric.Text(text, options);
+    const textObj = new fabric.Text(text, opt);
 
     canvas.add(textObj);
     canvas.setActiveObject(textObj);
     canvas.renderAll();
 }
 
-function getOptions() {
+async function getOptions() {
     let options = {}
-    let inputs = $('.editor input').filter(function (index, el ) {
-        console.log($(el).attr('id') != 'textInput', $(el).attr('id'));
+    let inputs = await $('#controls').filter(function (index, el ) {
        return $(el).attr('id') != 'textInput';
-    })
-    inputs.each(function (index, el) {
-        options = {...options, {
+    }).serializeArray()
 
-        }};
-    })
+    for (const [index, el] of Object.entries(inputs)) {
+        switch (el.name) {
+            case 'fontWeight':
+                options[el.name] = $(`[name="${el.name}"]`).attr('data-value')
+                break;
+            case 'fontStyle':
+                options[el.name] = $(`[name="${el.name}"]`).attr('data-value')
+                break;
+            default:
+                options[el.name] = el.value
+        }
+    }
+
+    return options;
 }
 
 function editText(newText) {
@@ -153,20 +160,65 @@ function updateTextInput(textObject) {
     }
 }
 
+function updateFontSize(textObject) {
+    const fontSize = document.getElementById('font-size');
+    if (textObject && textObject.type === 'text') {
+        fontSize.value = textObject.fontSize
+    }
+}
+
+function updateFontFamily(textObject) {
+    const fontFamily = document.getElementById('font-family');
+    if (textObject && textObject.type === 'text') {
+        fontFamily.value = textObject.fontFamily
+    }
+}
+function updateFontWeight(textObject) {
+    const fontWeight = document.getElementById('text-bold');
+    if (textObject && textObject.type === 'text') {
+        console.log(textObject.fontWeight.toString()  == 'bold')
+        textObject.fontWeight.toString()  == 'bold' ? $(fontWeight).attr('checked', 'checked') : $(fontWeight).removeAttr('checked')
+    }
+}
+
+function updateFontStyle(textObject) {
+    const fontStyle = document.getElementById('text-italic');
+    if (textObject && textObject.type === 'text') {
+        fontStyle.checked = textObject.fontStyle.toString()  == 'italic' ? 'checked' : ''
+    }
+}
+
+function updateFontColor(textObject) {
+    const fontColor = document.getElementById('text-color');
+    if (textObject && textObject.type === 'text') {
+        fontColor.value = textObject.fill
+    }
+}
+
+function updateAllTextInputs(activeObject) {
+    updateTextInput(activeObject);
+    updateFontSize(activeObject);
+    updateFontFamily(activeObject);
+    updateFontWeight(activeObject);
+    updateFontStyle(activeObject);
+    updateFontColor(activeObject);
+}
 // Listen for object selection using 'object:selected'
 canvas.on('selection:created', function(e) {
     const activeObject = canvas.getActiveObject();
-    updateTextInput(activeObject);
+    updateAllTextInputs(activeObject);
 });
 
 canvas.on('selection:updated', function(e) {
+    console.log('selection:updated')
     const activeObject = canvas.getActiveObject();
-    updateTextInput(activeObject);
+    updateAllTextInputs(activeObject);
 });
 
 canvas.on('object:selected', function(e) {
+    console.log('object:selected')
     const activeObject = e.target;
-    updateTextInput(activeObject);
+    updateAllTextInputs(activeObject);
 });
 
 // Listen for deselection to clear the input field
@@ -180,6 +232,8 @@ function changeFontFamily(fontFamily) {
     if (activeObject && activeObject.type === 'text') {
         activeObject.set({ fontFamily: fontFamily });
         canvas.renderAll();
+    } else {
+        $('#font-family').value = fontFamily
     }
 }
 
@@ -189,6 +243,8 @@ function changeFontSize(fontSize) {
     if (activeObject && activeObject.type === 'text') {
         activeObject.set({ fontSize: parseInt(fontSize, 10) });
         canvas.renderAll();
+    } else {
+        $('#font-size').value = fontSize
     }
 }
 
@@ -209,6 +265,8 @@ function toggleBold(isBold) {
     if (activeObject && activeObject.type === 'text') {
         activeObject.set({ fontWeight: isBold ? 'bold' : 'normal' });
         canvas.renderAll();
+    } else {
+        $('#text-bold').attr('data-value', isBold ? 'bold' : 'normal');
     }
 }
 
@@ -218,6 +276,8 @@ function toggleItalic(isItalic) {
     if (activeObject && activeObject.type === 'text') {
         activeObject.set({ fontStyle: isItalic ? 'italic' : 'normal' });
         canvas.renderAll();
+    } else {
+        $('#text-italic').attr('data-value', isItalic ? 'italic' : 'normal');
     }
 }
 
@@ -238,6 +298,10 @@ function uploadImageFromImgTag(imgElement) {
 }
 
 $(function () {
+    $('#addText').on('click', async function (e) {
+        e.preventDefault();
+        addText(await getOptions())
+    })
     $('.tshirt-image').on('click', function (e) {
         clearCanvas();
         $(this).parent().find('img').removeClass('active')
