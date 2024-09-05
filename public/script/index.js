@@ -35,6 +35,7 @@ function uploadImage(e, fitSize = false) {
 
 function deleteSelected() {
     const activeObject = canvas.getActiveObject();
+    console.log(activeObject);
     if (activeObject) {
         canvas.remove(activeObject);
         canvas.renderAll();
@@ -176,8 +177,7 @@ function updateFontFamily(textObject) {
 function updateFontWeight(textObject) {
     const fontWeight = document.getElementById('text-bold');
     if (textObject && textObject.type === 'text') {
-        console.log(textObject.fontWeight.toString()  == 'bold')
-        textObject.fontWeight.toString()  == 'bold' ? $(fontWeight).attr('checked', 'checked') : $(fontWeight).removeAttr('checked')
+        fontWeight.checked = textObject.fontWeight.toString()  == 'bold' ? 'checked' : ''
     }
 }
 
@@ -223,8 +223,18 @@ canvas.on('object:selected', function(e) {
 
 // Listen for deselection to clear the input field
 canvas.on('selection:cleared', function() {
-    document.getElementById('textInput').value = '';
+    console.log("working")
+    setDefaultValues()
 });
+
+function setDefaultValues() {
+    document.getElementById('textInput').value = '';
+    document.getElementById('font-family').value = document.getElementById('font-family').children[0].value;
+    document.getElementById('font-size').value = 30;
+    document.getElementById('text-color').value = '#000000';
+    document.getElementById('text-bold').checked = '';
+    document.getElementById('text-italic').checked = '';
+}
 
 // Изменение семейства шрифтов
 function changeFontFamily(fontFamily) {
@@ -267,6 +277,7 @@ function toggleBold(isBold) {
         canvas.renderAll();
     } else {
         $('#text-bold').attr('data-value', isBold ? 'bold' : 'normal');
+        $('#text-bold').attr('checked', isBold ? 'checked' : '');
     }
 }
 
@@ -298,14 +309,37 @@ function uploadImageFromImgTag(imgElement) {
 }
 
 $(function () {
+
     $('#addText').on('click', async function (e) {
         e.preventDefault();
         addText(await getOptions())
     })
+
+
+
     $('.tshirt-image').on('click', function (e) {
         clearCanvas();
         $(this).parent().find('img').removeClass('active')
         $(this).addClass('active')
         uploadImageFromImgTag(this)
+    })
+
+    $(document).on('click', function (e) {
+        e.preventDefault();
+        let parent = $(e.target).closest('.editor')[0]
+        if ($(this).tagName !== 'canvas' && (parent === undefined || parent.className !== 'editor')) {
+            setDefaultValues()
+        } else {
+            console.log($(this).tagName)
+        }
+    })
+
+    $('#text-bold, #text-italic').on('change', function (e) {
+        e.preventDefault();
+        console.log("work")
+        switch ($(this).attr('id')) {
+            case 'text-bold':
+                break;
+        }
     })
 })

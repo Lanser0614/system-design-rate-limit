@@ -14,7 +14,7 @@
     <div class="canvas" id="canvas">
         <canvas id="printCanvas"></canvas>
     </div>
-    <form id="controls" class="button-group">
+    <form action="#" id="controls" class="button-group">
         <div class="upper-container">
             <div class="tshirt-image-container">
                 <img class="tshirt-image" src={{ asset("image/white-tshirt.png") }} alt="tshirt-white">
@@ -60,10 +60,10 @@
             </div>
             <div style="display: flex; justify-content: space-between">
                 <label for="text-bold">Жирный:
-                    <input type="checkbox" name="fontWeight" id="text-bold" onchange="toggleBold(this.checked)">
+                    <input type="checkbox" name="fontWeight" id="text-bold">
                 </label>
                 <label for="text-italic">Курсив:
-                    <input type="checkbox" name="fontStyle" id="text-italic" onchange="toggleItalic(this.checked)">
+                    <input type="checkbox" name="fontStyle" id="text-italic">
                 </label>
             </div>
         </div>
