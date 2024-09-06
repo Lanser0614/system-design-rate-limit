@@ -35,7 +35,6 @@ function uploadImage(e, fitSize = false) {
 
 function deleteSelected() {
     const activeObject = canvas.getActiveObject();
-    console.log(activeObject);
     if (activeObject) {
         canvas.remove(activeObject);
         canvas.renderAll();
@@ -96,7 +95,7 @@ fileInput.addEventListener('change', (e) => {
     uploadImage(e);
 });
 
-function addText(options) {
+async function addText(options) {
     const text = document.getElementById('textInput').value;
     if (!text.trim()) return;
 
@@ -112,7 +111,7 @@ function addText(options) {
         hasBorders: true,
         hasControls: true
     }
-    let opt = {...defaultOptions, ...options}
+    let opt =  await {...defaultOptions, ...options}
 
     const textObj = new fabric.Text(text, opt);
 
@@ -123,20 +122,22 @@ function addText(options) {
 
 async function getOptions() {
     let options = {}
-    let inputs = await $('#controls').filter(function (index, el ) {
+    let inputs = await $('.editor').find('input,select').filter(function (index, el ) {
        return $(el).attr('id') != 'textInput';
-    }).serializeArray()
+    })
 
     for (const [index, el] of Object.entries(inputs)) {
         switch (el.name) {
             case 'fontWeight':
-                options[el.name] = $(`[name="${el.name}"]`).attr('data-value')
+                options[el.name] = $(`[name="${el.name}"]`).attr('data-value') ?? 'normal'
                 break;
             case 'fontStyle':
-                options[el.name] = $(`[name="${el.name}"]`).attr('data-value')
+                options[el.name] = $(`[name="${el.name}"]`).attr('data-value') ?? 'normal'
                 break;
             default:
-                options[el.name] = el.value
+                if (el.name !== undefined) {
+                    options[el.name] = el.value
+                }
         }
     }
 
@@ -177,14 +178,14 @@ function updateFontFamily(textObject) {
 function updateFontWeight(textObject) {
     const fontWeight = document.getElementById('text-bold');
     if (textObject && textObject.type === 'text') {
-        fontWeight.checked = textObject.fontWeight.toString()  == 'bold' ? 'checked' : ''
+        fontWeight.checked = textObject.fontWeight  == 'bold' ? 'checked' : ''
     }
 }
 
 function updateFontStyle(textObject) {
     const fontStyle = document.getElementById('text-italic');
     if (textObject && textObject.type === 'text') {
-        fontStyle.checked = textObject.fontStyle.toString()  == 'italic' ? 'checked' : ''
+        fontStyle.checked = textObject.fontStyle  == 'italic' ? 'checked' : ''
     }
 }
 
@@ -210,20 +211,17 @@ canvas.on('selection:created', function(e) {
 });
 
 canvas.on('selection:updated', function(e) {
-    console.log('selection:updated')
     const activeObject = canvas.getActiveObject();
     updateAllTextInputs(activeObject);
 });
 
 canvas.on('object:selected', function(e) {
-    console.log('object:selected')
     const activeObject = e.target;
     updateAllTextInputs(activeObject);
 });
 
 // Listen for deselection to clear the input field
 canvas.on('selection:cleared', function() {
-    console.log("working")
     setDefaultValues()
 });
 
@@ -265,7 +263,7 @@ function changeTextColor(color) {
         activeObject.set({ fill: color });
         canvas.renderAll();
     } else {
-        $('#textInput').value = color;
+        $('#text-color').val(color);
     }
 }
 
@@ -289,12 +287,18 @@ function toggleItalic(isItalic) {
         canvas.renderAll();
     } else {
         $('#text-italic').attr('data-value', isItalic ? 'italic' : 'normal');
+        $('#text-italic').attr('checked', isItalic ? 'checked' : '');
     }
 }
 
 function clearCanvas() {
     canvas.clear();
     canvas.renderAll();
+}
+
+function clearSelection() {
+    canvas.discardActiveObject(); // Deselect active object
+    canvas.renderAll();           // Re-render the canvas
 }
 
 function uploadImageFromImgTag(imgElement) {
@@ -312,7 +316,8 @@ $(function () {
 
     $('#addText').on('click', async function (e) {
         e.preventDefault();
-        addText(await getOptions())
+        const options = await getOptions();
+        await addText(options)
     })
 
 
@@ -325,21 +330,10 @@ $(function () {
     })
 
     $(document).on('click', function (e) {
-        e.preventDefault();
-        let parent = $(e.target).closest('.editor')[0]
-        if ($(this).tagName !== 'canvas' && (parent === undefined || parent.className !== 'editor')) {
-            setDefaultValues()
-        } else {
-            console.log($(this).tagName)
-        }
-    })
-
-    $('#text-bold, #text-italic').on('change', function (e) {
-        e.preventDefault();
-        console.log("work")
-        switch ($(this).attr('id')) {
-            case 'text-bold':
-                break;
+        if (!$(e.target).is('input, select')) {
+            if (!canvas.wrapperEl.contains(e.target)) {
+                clearSelection(); // Clear canvas selection when clicked outside
+            }
         }
     })
 })

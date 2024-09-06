@@ -10,17 +10,26 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-<div id="canvasContainer" class="parent">
+<nav class="navbar animated-box">
+    <div class="logo-container">
+        <img src="{{ asset('image/logo.jpg') }}" alt="Logo" class="logo">
+    </div>
+{{--    <ul class="nav-links">--}}
+{{--        <li><a href="#">Home</a></li>--}}
+{{--        <li><a href="#">About</a></li>--}}
+{{--        <li><a href="#">Services</a></li>--}}
+{{--        <li><a href="#">Contact</a></li>--}}
+{{--    </ul>--}}
+</nav>
+<div id="canvasContainer" class="parent container">
     <div class="canvas" id="canvas">
         <canvas id="printCanvas"></canvas>
     </div>
-    <form action="#" id="controls" class="button-group">
+    <div action="#" id="controls" class="button-group">
         <div class="upper-container">
-            <div class="tshirt-image-container">
-                <img class="tshirt-image" src={{ asset("image/white-tshirt.png") }} alt="tshirt-white">
-                <img class="tshirt-image" src={{ asset("image/black-tshirt.png") }} alt="tshirt-black">
-            </div>
-            <div class="dropzone" id="dropzone">
+            <img class="tshirt-image" src={{ asset("image/white-tshirt.png") }} alt="tshirt-white" style="grid-column: span 3 / span 3">
+            <img class="tshirt-image" src={{ asset("image/black-tshirt.png") }} alt="tshirt-black" style="grid-column: span 3 / span 3">
+            <div class="dropzone" id="dropzone" style="grid-column: span 6 / span 6">
                 <span
                     style="color: #008bf5; white-space: pre-wrap; width: 50%;"
                 >Перетащите ваш файл сюда или выберите его
@@ -32,7 +41,7 @@
         <div class="editor">
             <div>
                 <label for="textInput" style="width: 100%; text-align: left">
-                    <span>Добавить текст</span>
+                    <div class="title">Добавить текст</div>
                     <input type="text" id="textInput" name="text" placeholder="Добавьте текст" oninput="editText(this.value)"/>
                     <button id="addText">Добавить текст</button>
                 </label>
@@ -60,16 +69,16 @@
             </div>
             <div style="display: flex; justify-content: space-between">
                 <label for="text-bold">Жирный:
-                    <input type="checkbox" name="fontWeight" id="text-bold">
+                    <input type="checkbox" name="fontWeight" id="text-bold" onchange="toggleBold(this.checked)">
                 </label>
                 <label for="text-italic">Курсив:
-                    <input type="checkbox" name="fontStyle" id="text-italic">
+                    <input type="checkbox" name="fontStyle" id="text-italic" onchange="toggleItalic(this.checked)">
                 </label>
             </div>
         </div>
         <button id="deleteButton" class="box-shadow-main">Удалить выбранный элемент</button>
         <button id="downloadButton" class="box-shadow-main"><i class="fas fa-upload"></i> Скачать</button>
-    </form>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
