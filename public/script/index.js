@@ -336,4 +336,37 @@ $(function () {
             }
         }
     })
+
+
+    document.getElementById('openModalBtn').addEventListener('click', function() {
+        console.log("work")
+        document.getElementById('modal').classList.add('active');
+        document.getElementById('modalOverlay').classList.add('active');
+    });
+
+    document.getElementById('closeModalBtn').addEventListener('click', function() {
+        document.getElementById('modal').classList.remove('active');
+        document.getElementById('modalOverlay').classList.remove('active');
+    });
+
+// Handle form submission
+    document.getElementById('modalForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent form from submitting normally
+
+        const formData = new FormData(this);
+
+        fetch('YOUR_BACKEND_URL_HERE', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                document.getElementById('modal').classList.remove('active');
+                document.getElementById('modalOverlay').classList.remove('active');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    })
 })

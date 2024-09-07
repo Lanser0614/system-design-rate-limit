@@ -25,7 +25,7 @@
     <div class="canvas" id="canvas">
         <canvas id="printCanvas"></canvas>
     </div>
-    <div action="#" id="controls" class="button-group">
+    <div id="controls" class="button-group">
         <div class="upper-container">
             <img class="tshirt-image" src={{ asset("image/white-tshirt.png") }} alt="tshirt-white" style="grid-column: span 3 / span 3">
             <img class="tshirt-image" src={{ asset("image/black-tshirt.png") }} alt="tshirt-black" style="grid-column: span 3 / span 3">
@@ -80,6 +80,26 @@
         <button id="downloadButton" class="box-shadow-main"><i class="fas fa-upload"></i> Скачать</button>
     </div>
 </div>
+<button id="openModalBtn">Open Modal</button>
+<div id="modal" class="modal">
+    <form id="modalForm">
+        <h2>Submit Your Information</h2>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required><br><br>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required><br><br>
+
+        <button type="submit">Submit</button>
+        <button type="button" id="closeModalBtn">Close</button>
+    </form>
+</div>
+
+<div id="modalOverlay" class="modal-overlay"></div>
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
