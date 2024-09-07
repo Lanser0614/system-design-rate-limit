@@ -25,30 +25,31 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/', function (Request $request) {
-    $faker = Factory::create();
-
-
     $order = new Order();
-    $order->phone = $faker->phoneNumber();
-    $order->name = $faker->name();
-    $order->address = $faker->address();
+    $order->phone = $request->phone;
+    $order->name = $request->name;
+    $order->address = $request->address;
     $order->save();
 
-    $files = $request->file('files');
+    // Get the base64 string from the request
+    $base64Image = $request->input('image');
 
-    /** @var UploadedFile $file */
-    foreach ($files as $file) {
+    // Strip out the base64 header (optional, but usually necessary)
+    $imageData = explode(',', $base64Image)[1];  // Removes the 'data:image/png;base64,' part
 
-        $path = Storage::disk('public')->putFile('images', $file);
+    // Decode the base64 string into binary data
+    $imageData = base64_decode($imageData);
 
-        $save = new Image();
-        $save->path = $path;
-        $save->order_id = $order->id;
-        $save->save();
-    }
+    // Generate a unique file name for the PNG
+    $fileName = $order->id . '_' . $order->created_at->timestamp . '_' . time() . '.png';
 
+    // Save the binary image data as a .png file in the 'public' directory or 'storage/app/public'
+    $path = Storage::put('public/' . $fileName, $imageData);
 
-    return response()->json(['file_uploaded'], 200);
+    $save = new Image();
+    $save->path = $path;
+    $save->order_id = $order->id;
+    $save->save();
 
-
+    return response()->json(['result' => 'success']);
 });

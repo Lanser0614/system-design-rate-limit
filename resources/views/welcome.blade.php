@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
           integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
 <nav class="navbar animated-box">
@@ -78,31 +79,38 @@
         </div>
         <button id="deleteButton" class="box-shadow-main">Удалить выбранный элемент</button>
         <button id="downloadButton" class="box-shadow-main"><i class="fas fa-upload"></i> Скачать</button>
+        <p><a href="#" data-modal>Подтверждение заказа</a></p>
     </div>
 </div>
-<button id="openModalBtn">Open Modal</button>
+
 <div id="modal" class="modal">
     <form id="modalForm">
-        <h2>Submit Your Information</h2>
-        <label for="name">Name:</label>
+        <h2>Добавьте контактные данные</h2>
+        <label for="name">Ф.И.О:</label>
         <input type="text" id="name" name="name" required><br><br>
 
-        <label for="phone">Phone:</label>
+        <label for="phone">Тел:</label>
         <input type="tel" id="phone" name="phone" required><br><br>
 
-        <label for="address">Address:</label>
+        <label for="address">Адрес:</label>
         <input type="text" id="address" name="address" required><br><br>
 
-        <button type="submit">Submit</button>
-        <button type="button" id="closeModalBtn">Close</button>
+        <button type="submit">Подтвердить заказ</button>
     </form>
 </div>
 
 <div id="modalOverlay" class="modal-overlay"></div>
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <h2>Order Submitted Successfully!</h2>
+        <p>Thank you for your order. We will process it soon.</p>
+        <button id="okButton">OK</button>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src={{ asset("script/index.js") }}></script>
 </body>
 </html>

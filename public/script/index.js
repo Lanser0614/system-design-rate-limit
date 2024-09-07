@@ -2,6 +2,7 @@ const canvas = new fabric.Canvas('printCanvas', {
     width: document.getElementById('canvas').offsetWidth - 10,
     height: document.getElementById('canvas').offsetHeight - 10
 });
+
 document.getElementById('deleteButton').addEventListener('click', deleteSelected);
 document.getElementById('downloadButton').addEventListener('click', downloadImage);
 
@@ -98,10 +99,9 @@ fileInput.addEventListener('change', (e) => {
 async function addText(options) {
     const text = document.getElementById('textInput').value;
     if (!text.trim()) return;
-
     const defaultOptions = {
-        left: 100,
-        top: 100,
+        left: canvas.width / 2 - 15,
+        top: canvas.height / 3,
         fontSize: 30,
         fill: 'black',
         editable: true,
@@ -312,6 +312,22 @@ function uploadImageFromImgTag(imgElement) {
         .catch(error => console.error('Error fetching the image:', error));
 }
 
+function sendOrder() {
+    let data = {};
+
+    data.image = canvas.toDataURL({
+        format: 'png',
+        quality: 1.0
+    });
+    data.name = $('#name').val();
+    data.phone = $('#phone').val();
+    data.address = $('#address').val();
+    axios.post('/api/', data).then((response) => {
+        $('#modalForm').hide();
+        $('#successModal').modal();
+    }).catch(error => console.log(error));
+}
+
 $(function () {
 
     $('#addText').on('click', async function (e) {
@@ -337,36 +353,18 @@ $(function () {
         }
     })
 
+    $('a[data-modal]').click(function (e) {
+        e.preventDefault();
+        $('#modal').modal()
+    })
 
-    document.getElementById('openModalBtn').addEventListener('click', function() {
-        console.log("work")
-        document.getElementById('modal').classList.add('active');
-        document.getElementById('modalOverlay').classList.add('active');
-    });
+    $('#modalForm').on('submit', function (e) {
+        e.preventDefault();
+        sendOrder();
+    })
 
-    document.getElementById('closeModalBtn').addEventListener('click', function() {
-        document.getElementById('modal').classList.remove('active');
-        document.getElementById('modalOverlay').classList.remove('active');
-    });
-
-// Handle form submission
-    document.getElementById('modalForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent form from submitting normally
-
-        const formData = new FormData(this);
-
-        fetch('YOUR_BACKEND_URL_HERE', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                document.getElementById('modal').classList.remove('active');
-                document.getElementById('modalOverlay').classList.remove('active');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+    $('#okButton').on('click', async function (e) {
+        e.preventDefault();
+        window.location.reload();
     })
 })
