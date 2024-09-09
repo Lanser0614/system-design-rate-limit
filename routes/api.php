@@ -44,10 +44,10 @@ Route::post('/new-order', function (Request $request) {
     $fileName = $order->id . '_' . $order->created_at->timestamp . '_' . time() . '.png';
 
     // Save the binary image data as a .png file in the 'public' directory or 'storage/app/public'
-    $path = Storage::put('public/' . $fileName, $imageData);
+    Storage::put('public/' . $fileName, $imageData);
 
     $save = new Image();
-    $save->path = $path;
+    $save->path = $fileName;
     $save->order_id = $order->id;
     $save->save();
 
