@@ -324,7 +324,7 @@ function sendOrder() {
     data.name = $('#name').val();
     data.phone = $('#phone').val();
     data.address = $('#address').val();
-    const url = backendUrl + '/api/';
+    const url = backendUrl + '/api/new-order';
     axios.post(url, data).then((response) => {
         $('#modalForm').hide();
         $('#successModal').modal();

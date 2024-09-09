@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/', function (Request $request) {
+Route::post('/new-order', function (Request $request) {
     $order = new Order();
     $order->phone = $request->phone;
     $order->name = $request->name;
