@@ -180,14 +180,14 @@ function updateFontFamily(textObject) {
 function updateFontWeight(textObject) {
     const fontWeight = document.getElementById('text-bold');
     if (textObject && textObject.type === 'text') {
-        fontWeight.checked = textObject.fontWeight  == 'bold' ? 'checked' : ''
+        fontWeight.checked = textObject.fontWeight  === 'bold' ? 'checked' : ''
     }
 }
 
 function updateFontStyle(textObject) {
     const fontStyle = document.getElementById('text-italic');
     if (textObject && textObject.type === 'text') {
-        fontStyle.checked = textObject.fontStyle  == 'italic' ? 'checked' : ''
+        fontStyle.checked = textObject.fontStyle  === 'italic' ? 'checked' : ''
     }
 }
 
