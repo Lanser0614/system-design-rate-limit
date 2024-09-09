@@ -41,20 +41,9 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
     protected function menu(): array
     {
         return [
-            MenuGroup::make(static fn() => __('moonshine::ui.resource.system'), [
-                MenuItem::make(
-                    static fn() => __('moonshine::ui.resource.admins_title'),
-                    new MoonShineUserResource()
-                ),
-                MenuItem::make(
-                    static fn() => __('moonshine::ui.resource.role_title'),
-                    new MoonShineUserRoleResource()
-                ),
-            ]),
-
-            MenuItem::make('Documentation', 'https://moonshine-laravel.com/docs')
-                ->badge(fn() => 'Check')
-                ->blank(),
+//            MenuItem::make('Documentation', 'https://moonshine-laravel.com/docs')
+//                ->badge(fn() => 'Check')
+//                ->blank(),
 
             MenuItem::make(
                 static fn() => 'Заявки',
@@ -65,6 +54,18 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
                 static fn() => 'Ресунки',
                 new ImageResource()
             ),
+
+
+            MenuGroup::make(static fn() => __('moonshine::ui.resource.system'), [
+                MenuItem::make(
+                    static fn() => __('moonshine::ui.resource.admins_title'),
+                    new MoonShineUserResource()
+                ),
+                MenuItem::make(
+                    static fn() => __('moonshine::ui.resource.role_title'),
+                    new MoonShineUserRoleResource()
+                ),
+            ]),
         ];
     }
 
