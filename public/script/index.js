@@ -1,3 +1,5 @@
+const backendUrl = window.location.protocol + '//' + window.location.host
+
 const canvas = new fabric.Canvas('printCanvas', {
     width: document.getElementById('canvas').offsetWidth - 10,
     height: document.getElementById('canvas').offsetHeight - 10
@@ -322,10 +324,11 @@ function sendOrder() {
     data.name = $('#name').val();
     data.phone = $('#phone').val();
     data.address = $('#address').val();
-    axios.post('/api/', data).then((response) => {
+    const url = backendUrl + '/api/';
+    axios.post(url, data).then((response) => {
         $('#modalForm').hide();
         $('#successModal').modal();
-    }).catch(error => console.log(error));
+    }).catch(error => console.log(error.message));
 }
 
 $(function () {
