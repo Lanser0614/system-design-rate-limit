@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas Editor with Download</title>
-    <link rel="stylesheet" href={{ asset("css/styles.css") }}>
+    <title>{{ config('app.name') }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
           integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    @vite(['resources/css/styles.css'])
 </head>
 <body>
 <nav class="navbar animated-box">
@@ -78,7 +78,6 @@
             </div>
         </div>
         <button id="deleteButton" class="box-shadow-main">Удалить выбранный элемент</button>
-        <button id="downloadButton" class="box-shadow-main"><i class="fas fa-upload"></i> Скачать</button>
         <p><a href="#" data-modal>Подтверждение заказа</a></p>
     </div>
 </div>
@@ -102,15 +101,14 @@
 <div id="modalOverlay" class="modal-overlay"></div>
 <div id="successModal" class="modal">
     <div class="modal-content">
-        <h2>Order Submitted Successfully!</h2>
-        <p>Thank you for your order. We will process it soon.</p>
+        <h2>Заказ успешно отправлен!</h2>
+        <p>Спасибо за ваш заказ. Мы обработаем его в ближайшее время.</p>
         <button id="okButton">OK</button>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src={{ asset("script/index.js") }}></script>
+@vite(['resources/js/index.js'])
 </body>
 </html>
