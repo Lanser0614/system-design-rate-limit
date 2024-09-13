@@ -78,6 +78,7 @@
             </div>
         </div>
         <button id="deleteButton" class="box-shadow-main">Удалить выбранный элемент</button>
+        <button id="downloadButton" class="box-shadow-main"><i class="fas fa-upload"></i> Скачать</button>
         <p><a href="#" data-modal>Подтверждение заказа</a></p>
     </div>
 </div>
